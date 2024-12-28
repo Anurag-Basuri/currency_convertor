@@ -14,15 +14,13 @@ function App() {
         <div className="w-full mb-1">
           <InputBox
             CurrencyOptions={["Saab", "Volvo", "BMW"]}
-            label={"Currency Amount"}
+            label={"From"}
           />
         </div>
-      </div>
-      <div className="w-full max-w-md mx-auto border border-gray-60 rounded-lg p-5 backdrop-blur-sm bg-white/30">
-        <div className="w-full mb-1">
+      <div className="w-full mb-1">
           <InputBox
             CurrencyOptions={["Saab", "Volvo", "BMW"]}
-            label={"Currency Amount"}
+            label={"To"}
           />
         </div>
       </div>

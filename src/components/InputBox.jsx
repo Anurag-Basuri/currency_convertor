@@ -1,58 +1,96 @@
-import React from "react";
 import { useId } from "react";
 import PropTypes from "prop-types";
 
-function InputBox({ className = "", CurrencyOptions = [], label }) {
+function InputBox({
+  className = "",
+  CurrencyOptions = [],
+  label = "Amount",
+  inputDisabled = false,
+  amount = "",
+  onAmountChange = () => {},
+  currency = "usd",
+  onCurrencyChange = () => {},
+}) {
   const inputId = useId();
   const selectId = useId();
 
   return (
-    <div className="w-full flex flex-wrap justify-center items-center">
-      <div className={`bg-white p-3 rounded-lg text-sm flex ${className}`}>
-        {/* Search Input */}
-        <div className="w-1/2">
-          <label htmlFor={inputId} className="text-black/40 mb-2 inline-block">
+    <div className={`w-full flex justify-center items-center ${className}`}>
+      <div className="bg-white p-4 rounded-lg shadow-md text-sm flex w-full max-w-md">
+        {/* Amount Input */}
+        <div className="w-2/3 pr-2">
+          <label
+            htmlFor={inputId}
+            className="block text-black/60 mb-2 inline-block text-md font-medium"
+          >
             {label}
           </label>
           <input
             id={inputId}
-            className="outline-1 w-full bg-transparent py-1.5"
+            className="w-full border border-blue-400 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             type="number"
-            placeholder="Amount"
+            placeholder={`Enter ${label.toLowerCase()}`}
+            disabled={inputDisabled}
+            value={amount}
+            onChange={(e) => {
+              onAmountChange(e.target.value);
+            }}
           />
         </div>
 
         {/* Currency Selector */}
-        <div className="w-1/2 flex flex-wrap justify-end text-right">
+        <div className="w-1/3 pl-2">
           <label
             htmlFor={selectId}
-            className="text-black/40 mb-2 w-full label label-text"
+            className="block text-black/60 mb-2 text-md font-medium"
           >
             Currency Type
           </label>
           <select
-            className="select max-w-sm bg-gray-200 cursor-pointer rounded-none"
+            className="w-full border border-blue-400 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent cursor-pointer"
             id={selectId}
-            aria-label="Currency Selector"
+            aria-label="Currency Type"
+            value={currency}
+            onChange={(e) => {
+              onCurrencyChange(e.target.value);
+            }}
           >
-            {CurrencyOptions.map((currency) => (
-              <option key={currency} value={currency}>
-                {currency}
+            {CurrencyOptions.length ? (
+              CurrencyOptions.map((currency) => (
+                <option key={currency} value={currency}>
+                  {currency}
+                </option>
+              ))
+            ) : (
+              <option value="" disabled>
+                No options available
               </option>
-            ))}
-            <optgroup label="Frontend Technologies">
-              <option value="html">HTML</option>
-              <option value="css">CSS</option>
-              <option value="javascript">JavaScript</option>
-              <option value="nodejs">Node.js</option>
-              <option value="python">Python</option>
-              <option value="java">Java</option>
-            </optgroup>
+            )}
           </select>
         </div>
       </div>
     </div>
   );
 }
+
+InputBox.prototype = {
+  className: PropTypes.string,
+  CurrencyOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
+  label: PropTypes.string,
+  inputDisabled: PropTypes.bool,
+  amount: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  onAmountChange: PropTypes.func,
+  currency: PropTypes.string,
+  onCurrencyChange: PropTypes.func,
+};
+
+InputBox.defaultProps = {
+  className: "",
+  CurrencyOptions: [],
+  label: "Amount",
+  inputDisabled: false,
+  amount: "",
+  currency: "usd",
+};
 
 export default InputBox;
