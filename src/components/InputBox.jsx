@@ -21,20 +21,19 @@ function InputBox({
         <div className="w-2/3 pr-2">
           <label
             htmlFor={inputId}
-            className="block text-black/60 mb-2 inline-block text-md font-medium"
+            className="block text-black/60 mb-2 text-md font-medium"
           >
             {label}
           </label>
           <input
             id={inputId}
-            className="w-full border border-blue-400 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             type="number"
             placeholder={`Enter ${label.toLowerCase()}`}
-            disabled={inputDisabled}
+            className="w-full border border-blue-400 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             value={amount}
-            onChange={(e) => {
-              onAmountChange(e.target.value);
-            }}
+            disabled={inputDisabled}
+            aria-disabled={inputDisabled}
+            onChange={(e) => onAmountChange(e.target.value)}
           />
         </div>
 
@@ -47,18 +46,16 @@ function InputBox({
             Currency Type
           </label>
           <select
-            className="w-full border border-blue-400 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent cursor-pointer"
             id={selectId}
-            aria-label="Currency Type"
             value={currency}
-            onChange={(e) => {
-              onCurrencyChange(e.target.value);
-            }}
+            aria-label="Currency Type"
+            className="w-full border border-blue-400 px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent cursor-pointer"
+            onChange={(e) => onCurrencyChange(e.target.value)}
           >
             {CurrencyOptions.length ? (
-              CurrencyOptions.map((currency) => (
-                <option key={currency} value={currency}>
-                  {currency}
+              CurrencyOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
                 </option>
               ))
             ) : (
@@ -73,7 +70,7 @@ function InputBox({
   );
 }
 
-InputBox.prototype = {
+InputBox.propTypes = {
   className: PropTypes.string,
   CurrencyOptions: PropTypes.arrayOf(PropTypes.string).isRequired,
   label: PropTypes.string,
@@ -83,7 +80,7 @@ InputBox.prototype = {
   currency: PropTypes.string,
   onCurrencyChange: PropTypes.func,
 };
-
+ 
 InputBox.defaultProps = {
   className: "",
   CurrencyOptions: [],
