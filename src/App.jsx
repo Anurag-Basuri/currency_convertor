@@ -4,7 +4,10 @@ import "./App.css";
 
 function App() {
   const [amount, setAmount] = useState(0);
- 
+  const [from, setFrom] = useState("usd");
+  const [to, setTo] = useState("inr");
+  const [convertedAmt, setConvertedAmt] = useState(0);
+
   return (
     <div className="w-full h-screen flex justify-center items-center bg-cover bg-no-repeat relative overflow-hidden">
       {/* Background Video */}
@@ -22,12 +25,12 @@ function App() {
         <div className="w-full mb-1">
           <InputBox
             CurrencyOptions={["Saab", "Volvo", "BMW", "usd", "inr"]}
-            label={"From"}
+            label="From"
             inputDisabled={false}
             amount={amount}
             onAmountChange={(amount) => setAmount(amount)}
-            currency={"usd"}
-            onCurrencyChange={() => {}}
+            currency={from}
+            onCurrencyChange={(currency) => setFrom(currency)}
           />
         </div>
         <div className="relative w-full h-1">
@@ -42,9 +45,11 @@ function App() {
         <div className="w-full mb-1">
           <InputBox
             CurrencyOptions={["Saab", "Volvo", "BMW", "usd", "inr"]}
-            label={"To"}
+            label="To"
+            amount={convertedAmt}
             inputDisabled={true}
-            currency={"inr"}
+            currency={to}
+            onCurrencyChange={(currency) => setTo(currency)}
           />
         </div>
         <button
